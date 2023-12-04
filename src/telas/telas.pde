@@ -1,21 +1,16 @@
 import gifAnimation.*;
-
-
 import processing.sound.*;
+import processing.serial.*;
+Serial port;
 SoundFile file;
 SoundFile file1;
 SoundFile file2;
 
 PImage img;
-
 PImage img1;
-
 PImage img2;
-
 PImage img3;
-
 PImage img4;
-
 
 Gif myAnimation;
 Gif myAnimation1;
@@ -25,36 +20,22 @@ Gif myAnimation3;
 int value = -1;
 
 void setup() {
-
+  println(Serial.list()[0]);
+  port = new Serial(this, Serial.list()[0], 9600);
   fullScreen();
-
   myAnimation = new Gif(this, "earth.gif");
-
   myAnimation1 = new Gif(this, "sol.gif");
-
   myAnimation2 = new Gif(this, "lua.gif");
-  
   myAnimation3 = new Gif(this, "sky.gif");
-
   myAnimation.play();
-
   myAnimation1.play();
-
   myAnimation2.play();
-  
   myAnimation3.play();
-  
-
-
 
   img = loadImage("TELA 1.png");
-
   img1 = loadImage("borda.png");
-
   img2 = loadImage("tela terra.png");
-
   img3 = loadImage("tela sol.png");
-
   img4 = loadImage("tela lua.png");
 
   file1 = new SoundFile(this, "musica.mp3");
@@ -66,14 +47,11 @@ void setup() {
   file.play();
 
   file2 = new SoundFile(this, "audio switch.mp3");
-  
-
 }
 
 void draw() {
 
   image(img, 0, 0);
-  
   if(keyCode == UP){
     value = 0;
     terra();
@@ -91,6 +69,29 @@ void draw() {
   if(keyCode == DOWN){
     value = 3;
   }
+  
+  while (port.available() > 0){
+    String mensagem = port.readStringUntil(3);
+    if(mensagem != null){
+      int valor = int(mensagem.trim());
+      
+      if(valor == 0){
+        value = 0;
+        terra();
+      }
+      
+      if(valor == 1){
+        value = 1;
+        lua();
+      }
+      
+      if(valor == 2){
+        value = 2;
+        sol();
+      }
+    }
+  }
+
 }
 
 void keyPressed(){
