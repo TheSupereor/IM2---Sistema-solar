@@ -1,17 +1,27 @@
 #include <Arduino.h>
+#include <Stepper.h>
 
-#define TRIGGER_PIN_1 2  // Pino de trigger do sensor ultrassônico 1
-#define ECHO_PIN_1 3     // Pino de eco do sensor ultrassônico 1
+#define TRIGGER_PIN_1 2  
+#define ECHO_PIN_1 3    
 
-#define TRIGGER_PIN_2 4  // Pino de trigger do sensor ultrassônico 2
-#define ECHO_PIN_2 5     // Pino de eco do sensor ultrassônico 2
+#define TRIGGER_PIN_2 4  
+#define ECHO_PIN_2 5     
 
-#define TRIGGER_PIN_3 6  // Pino de trigger do sensor ultrassônico 3
-#define ECHO_PIN_3 7     // Pino de eco do sensor ultrassônico 3
+#define TRIGGER_PIN_3 6  
+#define ECHO_PIN_3 7     
+
+#define STEPPER_MOTOR1 8  
+#define STEPPER_MOTOR2 9     
+#define STEPPER_MOTOR3 10  
+#define STEPPER_MOTOR4 11     
+
+const int stepsPerRevolution = 200;  
+Stepper Sun(stepsPerRevolution, 8, 10, 9, 11);
 
 void setup() {
   Serial.begin(9600);
-  
+  Sun.setSpeed(60);
+
   pinMode(TRIGGER_PIN_1, OUTPUT);
   pinMode(ECHO_PIN_1, INPUT);
 
@@ -21,7 +31,6 @@ void setup() {
   pinMode(TRIGGER_PIN_3, OUTPUT);
   pinMode(ECHO_PIN_3, INPUT);
 }
-
 
 float getDistance(int triggerPin, int echoPin) {
   digitalWrite(triggerPin, LOW);
@@ -42,16 +51,20 @@ void loop() {
   float distance_3 = getDistance(TRIGGER_PIN_3, ECHO_PIN_3);
 
   if (distance_1 < 20) {
-    Serial.println("Objeto detectado no sensor 1!");
+    // sol
+    Serial.println("2");
   }
 
   if (distance_2 < 20) {
-    Serial.println("Objeto detectado no sensor 2!");
+    // terra
+    Serial.println("0");
   }
 
   if (distance_3 < 20) {
-    Serial.println("Objeto detectado no sensor 3!");
+    // lua
+    Serial.println("1");
   }
 
+  Sun.step(stepsPerRevolution);
   delay(100);  // Atraso para evitar leituras muito frequentes
 }

@@ -4,9 +4,28 @@
   "editor": "wokwi",
   "parts": [
     { "type": "wokwi-arduino-uno", "id": "uno", "top": 125.4, "left": 18.6, "attrs": {} },
-    { "type": "wokwi-hc-sr04", "id": "ultrasonic1", "top": -228.9, "left": 63.1, "attrs": {} },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "ultrasonic1",
+      "top": -228.9,
+      "left": 63.1,
+      "attrs": { "distance": "303" }
+    },
     { "type": "wokwi-hc-sr04", "id": "ultrasonic2", "top": -228.9, "left": -196.1, "attrs": {} },
-    { "type": "wokwi-hc-sr04", "id": "ultrasonic3", "top": -228.9, "left": 312.7, "attrs": {} }
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "ultrasonic3",
+      "top": -228.9,
+      "left": 312.7,
+      "attrs": { "distance": "108" }
+    },
+    {
+      "type": "wokwi-stepper-motor",
+      "id": "stepper1",
+      "top": -409.19,
+      "left": 202.03,
+      "attrs": { "size": "17" }
+    }
   ],
   "connections": [
     [ "ultrasonic2:TRIG", "uno:2", "green", [ "v211.2", "h364.4" ] ],
@@ -20,7 +39,11 @@
     [ "ultrasonic1:VCC", "uno:5V", "red", [ "v249.6", "h-124.8", "v220.8", "h163.2" ] ],
     [ "ultrasonic1:GND", "uno:GND.2", "black", [ "v240", "h-164.4", "v249.6", "h192" ] ],
     [ "ultrasonic3:VCC", "uno:5V", "red", [ "v470.4", "h-86.4" ] ],
-    [ "ultrasonic3:GND", "uno:GND.3", "black", [ "v480", "h-212.4" ] ]
+    [ "ultrasonic3:GND", "uno:GND.3", "black", [ "v480", "h-212.4" ] ],
+    [ "stepper1:B-", "uno:8", "violet", [ "v240", "h-0.01" ] ],
+    [ "stepper1:B+", "uno:9", "violet", [ "v230.4", "h-105.6" ] ],
+    [ "stepper1:A+", "uno:10", "violet", [ "v220.8", "h-105.6" ] ],
+    [ "stepper1:A-", "uno:11", "violet", [ "v211.2", "h-105.6" ] ]
   ],
   "dependencies": {}
 }
