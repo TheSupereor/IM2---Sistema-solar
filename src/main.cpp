@@ -15,12 +15,13 @@
 #define STEPPER_MOTOR3 10  
 #define STEPPER_MOTOR4 11     
 
-const int stepsPerRevolution = 200;  
+// motor 28BYJ-48 com Driver ULN2003, fonte: https://blogmasterwalkershop.com.br/arduino/arduino-utilizando-motor-de-passo-28byj-48-e-driver-uln2003
+const int stepsPerRevolution = 65;  
 Stepper Sun(stepsPerRevolution, 8, 10, 9, 11);
 
 void setup() {
   Serial.begin(9600);
-  Sun.setSpeed(60);
+  Sun.setSpeed(300);
 
   pinMode(TRIGGER_PIN_1, OUTPUT);
   pinMode(ECHO_PIN_1, INPUT);
@@ -66,5 +67,5 @@ void loop() {
   }
 
   Sun.step(stepsPerRevolution);
-  delay(100);  // Atraso para evitar leituras muito frequentes
+  delay(100);
 }
